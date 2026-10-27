@@ -1,0 +1,6 @@
+node_modules
+dist
+.env
+apps/server/src/generated
+test-results
+playwright-report

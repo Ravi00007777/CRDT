@@ -1,0 +1,15 @@
+{
+  "name": "syncspace",
+  "private": true,
+  "workspaces": ["apps/server", "apps/web"],
+  "scripts": {
+    "dev": "npm run dev -w apps/server & npm run dev -w apps/web & wait",
+    "build": "npm run build -w apps/server && npm run build -w apps/web",
+    "typecheck": "npm run typecheck -w apps/server && npm run typecheck -w apps/web",
+    "test": "npm test -w apps/server",
+    "test:e2e": "npm run test:e2e -w apps/web",
+    "load": "npm run load -w apps/server",
+    "seed": "npm run seed -w apps/server",
+    "db:migrate": "npm run db:migrate -w apps/server"
+  }
+}
