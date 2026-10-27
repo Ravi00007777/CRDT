@@ -1,10 +1,10 @@
 import { createServer } from 'node:http';
 import { env } from './config/env.js';
 import { createApp } from './app.js';
-import { attachCollaboration, createCollaboration, shutdownCollaboration } from './collaboration/hocuspocus.js';
+import { attachCollaboration, createCollaboration, kickRoom, shutdownCollaboration } from './collaboration/hocuspocus.js';
 
 const hocuspocus = createCollaboration();
-const server = createServer(createApp((id) => hocuspocus.closeConnections(id)));
+const server = createServer(createApp((id) => kickRoom(hocuspocus, id)));
 attachCollaboration(server, hocuspocus, env.WEB_ORIGIN);
 
 server.listen(env.PORT, () => console.log(`SyncSpace server on http://localhost:${env.PORT}`));

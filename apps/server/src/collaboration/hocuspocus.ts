@@ -75,6 +75,17 @@ export function attachCollaboration(server: HttpServer, hocuspocus: Hocuspocus<C
   return wss;
 }
 
+/**
+ * Force every client in a room to reconnect and re-authenticate. Closing the raw sockets
+ * (not just the per-document channel) makes the provider redo auth, so users who lost
+ * access are rejected while everyone else rejoins transparently.
+ */
+export function kickRoom(hocuspocus: Hocuspocus<CollabContext>, documentName: string) {
+  hocuspocus.documents.get(documentName)?.connections.forEach((_clients, connection) => {
+    connection.webSocket.close(4001, 'Access changed');
+  });
+}
+
 /** Store all in-memory documents before exit. */
 export async function shutdownCollaboration(hocuspocus: Hocuspocus<CollabContext>) {
   hocuspocus.closeConnections();
