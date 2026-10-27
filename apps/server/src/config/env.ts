@@ -7,7 +7,10 @@ const schema = z.object({
   PORT: z.coerce.number().default(4000),
   WEB_ORIGIN: z.string().default('http://localhost:5173'),
   NODE_ENV: z.string().default('development'),
+  // Secure cookies need HTTPS; set false when serving plain http (e.g. docker-compose on localhost).
+  COOKIE_SECURE: z.enum(['true', 'false']).optional(),
 });
 
 export const env = schema.parse(process.env);
 export const isProd = env.NODE_ENV === 'production';
+export const cookieSecure = env.COOKIE_SECURE ? env.COOKIE_SECURE === 'true' : isProd;

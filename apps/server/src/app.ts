@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { authRouter } from './api/auth.js';
@@ -22,6 +24,13 @@ export function createApp(kickRoom: KickRoom) {
   app.use('/api/auth', authRouter);
   app.use('/api/documents', documentsRouter(kickRoom));
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }));
+
+  // Production: serve the built web app from the same origin (dev uses the Vite proxy instead).
+  const webDist = path.resolve(import.meta.dirname, '../../web/dist');
+  if (existsSync(webDist)) {
+    app.use(express.static(webDist, { index: false, maxAge: '1h' }));
+    app.get('/{*path}', (_req, res) => res.sendFile(path.join(webDist, 'index.html')));
+  }
   app.use(errorHandler);
   return app;
 }

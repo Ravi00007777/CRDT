@@ -27,6 +27,19 @@ npm run dev                                  # API+collab on :4000, web on :5173
 Open http://localhost:5173. For a two-user demo, use a normal and an incognito window
 (`alice@demo.local` / `bob@demo.local`, password `password123` after seeding).
 
+## Docker (alternative)
+
+Runs Postgres plus a single app container (Express serves the built web app, so everything is on one origin):
+
+```bash
+export JWT_SECRET=$(openssl rand -hex 32)
+docker compose up --build        # http://localhost:4000
+```
+
+Containers are capped (app 1 CPU / 512 MB, db 0.5 CPU / 256 MB) to keep a laptop cool. For the live demo, the native setup above is lighter still, because Docker Desktop runs its own VM.
+
+> The compose file and Dockerfile have not been run here, since Docker isn't installed on the dev machine. The production code path they use (`npm run build`, then `node dist/index.js` serving web + API + WebSocket on :4000 with `COOKIE_SECURE=false`) was tested locally.
+
 ## Environment (`apps/server/.env`)
 
 | Variable | Purpose |
@@ -35,6 +48,7 @@ Open http://localhost:5173. For a two-user demo, use a normal and an incognito w
 | `JWT_SECRET` | ≥32 random chars for signing session cookies: `openssl rand -hex 32` |
 | `PORT` | Server port (default 4000) |
 | `WEB_ORIGIN` | Allowed browser origin for REST writes and WebSocket upgrades (default `http://localhost:5173`) |
+| `COOKIE_SECURE` | Optional `true`/`false`; defaults to `true` when `NODE_ENV=production`. Set `false` for plain-http localhost |
 
 Tests use `TEST_DATABASE_URL` if set, otherwise `postgresql://$USER@localhost:5432/syncspace_test`.
 
@@ -82,4 +96,4 @@ Final length is slightly above inserts − deletes (e.g. 804 vs 800) because two
 - Document titles go through REST and are not live-synced; collaborators see a rename on their next load.
 - State is persisted 1 s after edits stop (at most every 5 s). A graceful stop flushes everything, but a hard crash (`kill -9`, power loss) can lose up to ~5 s of edits.
 - One server process. Horizontal scaling would need the Hocuspocus Redis extension.
-- No Docker setup (not available on the dev machine).
+- Docker setup is untested (Docker not available on the dev machine).

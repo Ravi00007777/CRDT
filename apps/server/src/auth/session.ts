@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { parse } from 'cookie';
 import type { CookieOptions } from 'express';
-import { env, isProd } from '../config/env.js';
+import { cookieSecure, env } from '../config/env.js';
 
 export const SESSION_COOKIE = 'ss_session';
 const MAX_AGE_S = 7 * 24 * 3600;
@@ -10,7 +10,7 @@ const MAX_AGE_S = 7 * 24 * 3600;
 export const cookieOptions: CookieOptions = {
   httpOnly: true,
   sameSite: 'lax',
-  secure: isProd,
+  secure: cookieSecure,
   path: '/',
   maxAge: MAX_AGE_S * 1000,
 };
