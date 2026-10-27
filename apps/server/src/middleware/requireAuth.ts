@@ -2,11 +2,9 @@ import type { RequestHandler } from 'express';
 import { SESSION_COOKIE, verifySession } from '../auth/session.js';
 import { HttpError } from './errors.js';
 
-declare global {
-  namespace Express {
-    interface Request {
-      userId: string;
-    }
+declare module 'express-serve-static-core' {
+  interface Request {
+    userId: string;
   }
 }
 

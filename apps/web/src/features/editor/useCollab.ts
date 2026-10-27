@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Y from 'yjs';
 import { HocuspocusProvider } from '@hocuspocus/provider';
 
@@ -19,6 +19,9 @@ export function useCollab(documentId: string, onAuthFailed: () => void) {
   // Latches true after first sync so the editor stays mounted through disconnects.
   const [ready, setReady] = useState(false);
   const [peers, setPeers] = useState<Peer[]>([]);
+  // Latest callback without reconnecting when the parent re-renders.
+  const onAuthFailedRef = useRef(onAuthFailed);
+  useEffect(() => { onAuthFailedRef.current = onAuthFailed; });
 
   useEffect(() => {
     if (!documentId) return;
@@ -33,7 +36,7 @@ export function useCollab(documentId: string, onAuthFailed: () => void) {
         setSynced(state);
         if (state) setReady(true);
       },
-      onAuthenticationFailed: () => onAuthFailed(),
+      onAuthenticationFailed: () => onAuthFailedRef.current(),
     });
     const onAwareness = () => {
       const list: Peer[] = [];
@@ -53,7 +56,6 @@ export function useCollab(documentId: string, onAuthFailed: () => void) {
       setReady(false);
       setPeers([]);
     };
-    // onAuthFailed intentionally excluded: reconnecting on every render would drop state.
   }, [documentId]);
 
   return { session, status, synced, ready, peers };

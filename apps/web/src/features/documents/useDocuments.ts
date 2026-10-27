@@ -5,14 +5,14 @@ export function useDocuments() {
   const [docs, setDocs] = useState<DocSummary[] | null>(null);
   const [error, setError] = useState('');
 
-  const reload = useCallback(async () => {
-    try {
-      setDocs((await api<{ documents: DocSummary[] }>('/documents')).documents);
-      setError('');
-    } catch (e) {
-      setError((e as Error).message);
-    }
-  }, []);
+  const reload = useCallback(
+    () =>
+      api<{ documents: DocSummary[] }>('/documents').then(
+        (r) => { setDocs(r.documents); setError(''); },
+        (e: Error) => setError(e.message),
+      ),
+    [],
+  );
 
   useEffect(() => { reload(); }, [reload]);
 

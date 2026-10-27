@@ -10,8 +10,13 @@ import { useCollab } from '../features/editor/useCollab';
 import { api, ApiError, type DocSummary } from '../lib/api';
 import { colorFor } from '../lib/color';
 
+/** Remount per document so all state (meta, errors, collab session) resets cleanly. */
 export function EditorPage() {
   const { id = '' } = useParams();
+  return <DocumentEditor key={id} id={id} />;
+}
+
+function DocumentEditor({ id }: { id: string }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [meta, setMeta] = useState<{ document: DocSummary; access: 'owner' | 'editor' } | null>(null);
@@ -20,7 +25,6 @@ export function EditorPage() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setMeta(null);
     api<{ document: DocSummary; access: 'owner' | 'editor' }>(`/documents/${id}`)
       .then(setMeta)
       .catch((e) => setError(e instanceof ApiError && e.status === 404 ? 'This document does not exist or you do not have access.' : e.message));

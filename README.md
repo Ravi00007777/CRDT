@@ -45,6 +45,7 @@ Tests use `TEST_DATABASE_URL` if set, otherwise `postgresql://$USER@localhost:54
 | `npm run dev` | Server (tsx watch) + Vite dev server with `/api` and `/collab` proxied |
 | `npm run build` | Type-check and build both apps |
 | `npm run typecheck` | TypeScript checks |
+| `npm run lint` | ESLint (typescript-eslint + react-hooks), flat config in `eslint.config.js` |
 | `npm test` | Server integration tests (spawns a real server on :4100 against the test DB) |
 | `npm run test:e2e` | Playwright browser tests (starts/reuses `npm run dev`) |
 | `npm run load -- [clients] [ops]` | Headless load test against a running server (default 10 × 100) |

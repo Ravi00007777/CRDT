@@ -1,7 +1,10 @@
 {
   "name": "syncspace",
   "private": true,
-  "workspaces": ["apps/server", "apps/web"],
+  "workspaces": [
+    "apps/server",
+    "apps/web"
+  ],
   "scripts": {
     "dev": "npm run dev -w apps/server & npm run dev -w apps/web & wait",
     "build": "npm run build -w apps/server && npm run build -w apps/web",
@@ -10,6 +13,15 @@
     "test:e2e": "npm run test:e2e -w apps/web",
     "load": "npm run load -w apps/server",
     "seed": "npm run seed -w apps/server",
-    "db:migrate": "npm run db:migrate -w apps/server"
-  }
+    "db:migrate": "npm run db:migrate -w apps/server",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "typescript-eslint": "^8.72.1"
+  },
+  "type": "module"
 }
