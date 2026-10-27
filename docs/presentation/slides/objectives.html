@@ -1,0 +1,31 @@
+<section id="objectives" data-transition="fade" style="background:#FBFAF7;color:#1C1B19;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B45309;font-weight:600">Objectives</p>
+<h2 style="font-family:'EB Garamond', Georgia, serif;font-size:72px;font-weight:600;line-height:1.1">What SyncSpace had to guarantee</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border:1px solid #E7E3DC;padding:40px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#B45309;font-weight:600">01</p>
+<h3 style="font-size:44px;font-weight:600">Real-time sync</h3>
+<p style="font-size:32px;line-height:1.4;color:#4A4740">Edits reach every collaborator without a refresh.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border:1px solid #E7E3DC;padding:40px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#B45309;font-weight:600">02</p>
+<h3 style="font-size:44px;font-weight:600">Conflict-free merge</h3>
+<p style="font-size:32px;line-height:1.4;color:#4A4740">Concurrent edits converge; no valid change is lost.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border:1px solid #E7E3DC;padding:40px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#B45309;font-weight:600">03</p>
+<h3 style="font-size:44px;font-weight:600">Durable state</h3>
+<p style="font-size:32px;line-height:1.4;color:#4A4740">Documents survive refreshes and server restarts.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border:1px solid #E7E3DC;padding:40px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#B45309;font-weight:600">04</p>
+<h3 style="font-size:44px;font-weight:600">Secure access</h3>
+<p style="font-size:32px;line-height:1.4;color:#4A4740">Only authorised users can open or join a document.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1000px;font-size:24px;color:#6B6760">SyncSpace · B.Tech Project</p>
+<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#6B6760">3</p>
+<aside>Four guarantees drove every design decision. Real-time: edits show up for others without refreshing. Conflict-free: concurrent edits converge to the same document and nothing valid is dropped. Durable: a refresh or a server restart never loses saved content. Secure: knowing or guessing a document’s ID is not enough to read or join it. Each of these is backed by an automated test, which I’ll show later.</aside>
+</section>

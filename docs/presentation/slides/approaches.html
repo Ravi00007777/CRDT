@@ -1,0 +1,16 @@
+<section id="approaches" data-transition="fade" style="background:#FBFAF7;color:#1C1B19;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B45309;font-weight:600">Design choice</p>
+<h2 style="font-family:'EB Garamond', Georgia, serif;font-size:72px;font-weight:600;line-height:1.1">Three ways to handle concurrent edits</h2>
+</div>
+<table style="font-size:28px;color:#1C1B19">
+<tr style="background:#F1EEE8"><th style="width:22%;padding:16px 20px">&#160;</th><th style="width:22%">Locking</th><th style="width:28%">Operational Transform</th><th style="width:28%">CRDT (Yjs) — chosen</th></tr>
+<tr><td>Concurrent typing</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>How merges work</td><td>No merge needed</td><td>Server rewrites each op against concurrent ops</td><td>The data type merges itself, in any order</td></tr>
+<tr><td>Offline edits</td><td>No</td><td>Difficult</td><td>Natural: merge on reconnect</td></tr>
+<tr style="background:#FEF3C7"><td>Effort for us</td><td>Low</td><td>High: transform rules are hard to get right</td><td>Low, using a proven library</td></tr>
+</table>
+<p style="position:absolute;left:128px;bottom:64px;width:1000px;font-size:24px;color:#6B6760">SyncSpace · B.Tech Project</p>
+<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#6B6760">4</p>
+<aside>Three classic options. Locking is simple but defeats the purpose. Operational Transform is what Google Docs uses: a central server rewrites every operation against the ones that happened concurrently. It works, but writing correct transform functions is famously error-prone. CRDTs — conflict-free replicated data types — push the merge logic into the data structure itself, so replicas converge no matter what order updates arrive in. That also makes offline editing and reconnection natural. I chose a CRDT, specifically Yjs, a mature open-source implementation, rather than writing my own: the project’s contribution is building a correct, secure, durable system around it.</aside>
+</section>

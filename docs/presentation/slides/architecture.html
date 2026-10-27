@@ -1,0 +1,45 @@
+<section id="architecture" data-transition="fade" style="background:#FBFAF7;color:#1C1B19;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B45309;font-weight:600">Architecture</p>
+<h2 style="font-family:'EB Garamond', Georgia, serif;font-size:72px;font-weight:600;line-height:1.1">Three parts, two channels</h2>
+</div>
+<div style="display:flex;align-items:center;gap:16px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FFFEFB;border:1px solid #E7E3DC;padding:36px;border-radius:16px">
+<h3 style="font-size:44px;font-weight:600">Browser</h3>
+<ul style="font-size:28px;line-height:1.5;color:#4A4740">
+<li>React + Tiptap editor</li>
+<li>Y.Doc (local replica)</li>
+<li>Hocuspocus provider</li>
+</ul>
+</div>
+<div style="width:220px;display:flex;flex-direction:column;align-items:center;gap:16px">
+<p style="font-size:24px;text-align:center;line-height:1.3;color:#4A4740"><b style="color:#1C1B19">REST</b> /api</p>
+<x-connector head="both" style="width:180px;color:#4A4740;border-width:3px"></x-connector>
+<p style="font-size:24px;text-align:center;line-height:1.3;color:#4A4740"><b style="color:#B45309">WebSocket</b> /collab</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#1F2937;color:#F3EFE6;padding:36px;border-radius:16px">
+<h3 style="font-size:44px;font-weight:600;color:#FBBF24">Node server</h3>
+<ul style="font-size:28px;line-height:1.5;color:#E5E1D8">
+<li>Express: auth, docs, sharing</li>
+<li>Hocuspocus: rooms, sync</li>
+<li>One shared access check</li>
+</ul>
+</div>
+<div style="width:180px;display:flex;flex-direction:column;align-items:center;gap:16px">
+<p style="font-size:24px;text-align:center;color:#4A4740"><b style="color:#1C1B19">Prisma</b></p>
+<x-connector head="both" style="width:140px;color:#4A4740;border-width:3px"></x-connector>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FFFEFB;border:1px solid #E7E3DC;padding:36px;border-radius:16px">
+<h3 style="font-size:44px;font-weight:600">PostgreSQL</h3>
+<ul style="font-size:28px;line-height:1.5;color:#4A4740">
+<li>Users (bcrypt)</li>
+<li>Documents + Yjs state</li>
+<li>Access grants</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.5;color:#4A4740">Both channels carry the same httpOnly session cookie. Yjs binary state is the only copy of a document’s content; no HTML is ever stored.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1000px;font-size:24px;color:#6B6760">SyncSpace · B.Tech Project</p>
+<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#6B6760">6</p>
+<aside>The system has three parts. The browser runs a React app with the Tiptap rich-text editor bound to a Yjs document — each browser holds a full local replica. It talks to one Node process over two channels: plain REST for login, the dashboard and sharing, and a WebSocket for live collaboration through Hocuspocus, an open-source Yjs server. REST and WebSocket share a single authorization function, so the rules can’t drift apart. PostgreSQL, through Prisma, stores users with bcrypt-hashed passwords, documents with their binary Yjs state, and access grants. Important: the binary Yjs state is the canonical document; we never save HTML as a substitute. Keeping REST and WebSocket in one process was a deliberate choice: revoking access needs to reach live connections, which I’ll come back to.</aside>
+</section>

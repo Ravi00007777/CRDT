@@ -1,0 +1,38 @@
+<section id="crdt" data-transition="fade" style="background:#FBFAF7;color:#1C1B19;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B45309;font-weight:600">How a CRDT converges</p>
+<h2 style="font-family:'EB Garamond', Georgia, serif;font-size:72px;font-weight:600;line-height:1.1">Every character carries its own identity</h2>
+</div>
+<div style="display:flex;gap:64px;align-items:start">
+<div style="flex:1;display:flex;flex-direction:column;gap:32px">
+<p style="font-size:32px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Unique IDs.</b> Each insert is tagged (client, counter), so it never depends on positions that shift.</p>
+<p style="font-size:32px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Anchored inserts.</b> A new character names the neighbour it follows; ties break by client ID, the same way everywhere.</p>
+<p style="font-size:32px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Tombstones.</b> Deletes mark items as removed, so a late insert still finds its anchor.</p>
+</div>
+<div style="width:720px;display:flex;flex-direction:column;gap:32px;background:#F1EEE8;padding:48px;border-radius:16px">
+<div style="display:flex;gap:16px;justify-content:center">
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;background:#FFFEFB;border:2px solid #2563EB;border-radius:12px;padding:16px 24px">
+<p style="font-family:'EB Garamond', Georgia, serif;font-size:72px;line-height:1">H</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#2563EB">A,1</p>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;background:#FFFEFB;border:2px solid #2563EB;border-radius:12px;padding:16px 24px">
+<p style="font-family:'EB Garamond', Georgia, serif;font-size:72px;line-height:1">i</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#2563EB">A,2</p>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;background:#FFFEFB;border:2px solid #B45309;border-radius:12px;padding:16px 24px">
+<p style="font-family:'EB Garamond', Georgia, serif;font-size:72px;line-height:1">!</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#B45309">B,1</p>
+</div>
+</div>
+<p style="font-size:24px;line-height:1.5;color:#4A4740;text-align:center">Alice is client A (blue), Bob is client B (amber). Bob’s “!” follows (A,2), whatever order the updates arrive in.</p>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+<p style="font-size:24px;background:#1F2937;color:#F3EFE6;padding:8px 20px;border-radius:999px">Commutative</p>
+<p style="font-size:24px;background:#1F2937;color:#F3EFE6;padding:8px 20px;border-radius:999px">Associative</p>
+<p style="font-size:24px;background:#1F2937;color:#F3EFE6;padding:8px 20px;border-radius:999px">Idempotent</p>
+</div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1000px;font-size:24px;color:#6B6760">SyncSpace · B.Tech Project</p>
+<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#6B6760">5</p>
+<aside>The key idea of a sequence CRDT like Yjs: instead of “insert at position 5”, which breaks as soon as someone else edits before position 5, every inserted item gets a globally unique ID — the client’s ID plus a counter — and records which item it was inserted after. When two clients insert at the same spot, a deterministic tie-break on client ID orders them identically everywhere. Deletes leave tombstones so late-arriving inserts can still find their anchor. The merge is commutative, associative and idempotent: updates can arrive in any order, be grouped any way, even be delivered twice, and every replica ends up with the same document. That property is also what makes my persistence layer safe, as we’ll see.</aside>
+</section>

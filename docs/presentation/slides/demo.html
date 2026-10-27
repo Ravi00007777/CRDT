@@ -1,0 +1,15 @@
+<section id="demo" data-transition="fade" style="background:#B45309;color:#FFF8EB;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:64px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#FDE7C3;font-weight:600">Live demo</p>
+<h2 style="font-family:'EB Garamond', Georgia, serif;font-size:120px;font-weight:600;line-height:1">Two browsers, one document</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px 64px">
+<p style="font-size:36px;line-height:1.35"><b>1</b>  Alice and Bob open the shared doc</p>
+<p style="font-size:36px;line-height:1.35"><b>4</b>  Kill and restart the server: content is intact</p>
+<p style="font-size:36px;line-height:1.35"><b>2</b>  Typing appears instantly, with cursors</p>
+<p style="font-size:36px;line-height:1.35"><b>5</b>  Alice removes Bob: he is sent out</p>
+<p style="font-size:36px;line-height:1.35"><b>3</b>  Both type at once: same result</p>
+<p style="font-size:36px;line-height:1.35"><b>6</b>  A stranger pastes the URL: refused</p>
+</div>
+<aside>Now the live demo. Normal window as Alice, incognito as Bob, both on the seeded “BTP demo document”. Show: typing appears in the other window immediately with a named cursor; both typing in the same paragraph at once converges to the same text; press Ctrl+C on the server and start it again — the document comes back exactly; as Alice, open Share and remove Bob — his window returns to the dashboard with a notice; finally register a third account and paste the URL — “Can’t open this document”. Backup: the recorded video if anything goes wrong. Setup before the talk: Postgres running, npm run seed, npm run dev, both windows logged in.</aside>
+</section>

@@ -1,0 +1,20 @@
+{
+  "v": 4,
+  "createdOnFiles": { "v": 1, "at": "2026-10-27T17:10:00Z" },
+  "lists": "css",
+  "title": "SyncSpace — BTP Presentation",
+  "cover": "cover",
+  "order": ["cover", "problem", "objectives", "approaches", "crdt", "architecture", "flow", "persistence", "security", "revocation", "demo", "testing", "results", "limits", "thanks"],
+  "sections": {
+    "s1": { "description": "Why concurrent editing is hard and what the project set out to build", "start": "cover" },
+    "s2": { "description": "How SyncSpace works: CRDTs, architecture, sync, persistence and security", "start": "crdt" },
+    "s3": { "description": "Live demo, test evidence and measured results", "start": "demo" },
+    "s4": { "description": "Limitations, future work and questions", "start": "limits" }
+  },
+  "faces": {
+    "eb-garamond": { "family": "EB Garamond", "href": "https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..700&display=swap" },
+    "ibm-plex-sans": { "family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" },
+    "jetbrains-mono": { "family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" }
+  },
+  "designSystems": []
+}

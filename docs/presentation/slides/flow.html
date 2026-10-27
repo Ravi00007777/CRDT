@@ -1,0 +1,35 @@
+<section id="flow" data-transition="fade" style="background:#FBFAF7;color:#1C1B19;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B45309;font-weight:600">Collaboration flow</p>
+<h2 style="font-family:'EB Garamond', Georgia, serif;font-size:72px;font-weight:600;line-height:1.1">From opening a link to live cursors</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px 32px">
+<div style="display:flex;align-items:start;gap:24px;background:#FFFEFB;border:1px solid #E7E3DC;padding:28px 32px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#B45309">1</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Connect.</b> Browser opens /collab; the session cookie rides on the upgrade.</p>
+</div>
+<div style="display:flex;align-items:start;gap:24px;background:#FFFEFB;border:1px solid #E7E3DC;padding:28px 32px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#B45309">2</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Authorise.</b> Foreign origins refused; cookie and per-document access checked.</p>
+</div>
+<div style="display:flex;align-items:start;gap:24px;background:#FFFEFB;border:1px solid #E7E3DC;padding:28px 32px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#B45309">3</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Load.</b> Saved state comes from Postgres before any client syncs.</p>
+</div>
+<div style="display:flex;align-items:start;gap:24px;background:#FFFEFB;border:1px solid #E7E3DC;padding:28px 32px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#B45309">4</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Sync.</b> State vectors are exchanged; each side sends only what the other lacks.</p>
+</div>
+<div style="display:flex;align-items:start;gap:24px;background:#FFFEFB;border:1px solid #E7E3DC;padding:28px 32px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#B45309">5</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Edit.</b> Each keystroke becomes a small Yjs update, broadcast to the room.</p>
+</div>
+<div style="display:flex;align-items:start;gap:24px;background:#FFFEFB;border:1px solid #E7E3DC;padding:28px 32px;border-radius:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;font-weight:600;color:#B45309">6</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A4740"><b style="color:#1C1B19">Presence.</b> Names, colours and cursors travel as awareness; dropped on disconnect.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1000px;font-size:24px;color:#6B6760">SyncSpace · B.Tech Project</p>
+<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#6B6760">7</p>
+<aside>Walk through what happens when someone opens a document link. One: the browser opens a WebSocket on /collab; because the dev server proxies it on the same origin, the httpOnly cookie is sent automatically — no token in the URL. Two: the server rejects connections from other origins, then verifies the cookie and checks this user’s access to this specific document. Three: the document is loaded from Postgres before anyone syncs, so a client never sees an empty doc that later gets overwritten. Four: the Yjs sync protocol exchanges state vectors — compact summaries of what each side has — so a reconnecting client only transfers the difference. Five: every edit is a small incremental update, never the whole text. Six: presence — names, colours and cursor positions — travels on a separate awareness channel and disappears when a socket closes.</aside>
+</section>

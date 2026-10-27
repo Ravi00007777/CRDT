@@ -1,0 +1,24 @@
+<section id="results" data-transition="fade" style="background:#1F2937;color:#F3EFE6;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#FBBF24;font-weight:600">Load test results</p>
+<h2 style="font-family:'EB Garamond', Georgia, serif;font-size:72px;font-weight:600;line-height:1.1">Concurrent edits converge in milliseconds</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;border-top:4px solid #FBBF24;padding:32px 0 0 0">
+<p style="font-family:'EB Garamond', Georgia, serif;font-size:96px;line-height:1;font-weight:600">1,000</p>
+<p style="font-size:32px;line-height:1.4;color:#C9CED6">operations: 10 clients × 100 edits, identical result in 3 of 3 runs</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;border-top:4px solid #FBBF24;padding:32px 0 0 0">
+<p style="font-family:'EB Garamond', Georgia, serif;font-size:96px;line-height:1;font-weight:600">21–22 ms</p>
+<p style="font-size:32px;line-height:1.4;color:#C9CED6">from the last edit until all 10 replicas matched</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;border-top:4px solid #FBBF24;padding:32px 0 0 0">
+<p style="font-family:'EB Garamond', Georgia, serif;font-size:96px;line-height:1;font-weight:600">10,000</p>
+<p style="font-size:32px;line-height:1.4;color:#C9CED6">operations: 50 clients × 200 edits, identical, 46 ms to converge</p>
+</div>
+</div>
+<p style="font-size:24px;line-height:1.5;color:#C9CED6">Measured on one MacBook, server and clients on localhost. Clients mix random inserts and deletes in one shared text; final text is slightly longer than inserts − deletes because two clients deleting the same character count once.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1000px;font-size:24px;color:#9CA3AF">SyncSpace · B.Tech Project</p>
+<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#9CA3AF">13</p>
+<aside>The load test connects many headless clients to one document; each client concurrently makes random inserts and deletes in a shared text. At the end, I check that every client’s state vector — Yjs’s summary of which updates it has — is identical, and that the text is identical. With 10 clients and 100 operations each, all replicas ended identical in all three runs, and convergence took 21 to 22 milliseconds after the last edit. Scaling to 50 clients and 200 operations each, ten thousand operations, the result was still identical and converged in 46 milliseconds. Caveat: this is one machine on localhost, so it measures the sync logic and server, not real network latency. The final length being slightly above inserts minus deletes is expected: when two clients delete the same character at the same time, it is only deleted once.</aside>
+</section>

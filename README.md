@@ -6,7 +6,7 @@ Real-time collaborative rich-text editor (Google Docs-style), built on **Yjs** (
 - Express 5 + Hocuspocus 4 (same Node process), Prisma 7, Zod
 - Vitest integration tests, Playwright E2E, headless load test
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design and tradeoffs.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design and tradeoffs, and [docs/presentation](docs/presentation) for the BTP slides.
 
 ## Prerequisites
 
